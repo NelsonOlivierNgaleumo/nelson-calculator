@@ -1,31 +1,59 @@
 'use client';
 
- // any component that uses useAuth needs this because if a component directly imports useAuth, it needs to be a client component since useAuth uses React hooks.
+import React, { useState } from 'react';
+import { evaluate } from 'mathjs';
+import '@/styles/globals.css';
 
-import { Button } from 'react-bootstrap';
-import { signOut } from '@/utils/auth'; // anything in the src dir, you can use the @ instead of relative paths
-import { useAuth } from '@/utils/context/authContext';
+export default function Home() {
+  const [value, setValue] = useState('');
 
-function Home() {
-  const { user } = useAuth();
+  const handleEqual = () => {
+    try {
+      const result = evaluate(value);
+      setValue(result.toString());
+    } catch (error) {
+      setValue('Error');
+    }
+  };
 
   return (
-    <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
-      style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
-      }}
-    >
-      <h1>Hello {user.displayName}! </h1>
-      <p>Click the button below to logout!</p>
-      <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
-        Sign Out
-      </Button>
+    <div className="container">
+      <div className="calculator">
+        <form>
+          <div className="display">
+            <input type="text" value={value} />
+          </div>
+          <div>
+            <input type="button" value="AC" onClick={() => setValue('')} />
+            <input type="button" value="DE" onClick={() => setValue(value.slice(0, -1))} />
+            <input type="button" value="." onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="/" onClick={(e) => setValue(value + e.target.value)} />
+          </div>
+          <div>
+            <input type="button" value="7" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="8" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="9" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="*" onClick={(e) => setValue(value + e.target.value)} />
+          </div>
+          <div>
+            <input type="button" value="4" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="5" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="6" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="+" onClick={(e) => setValue(value + e.target.value)} />
+          </div>
+          <div>
+            <input type="button" value="1" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="2" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="3" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="-" onClick={(e) => setValue(value + e.target.value)} />
+          </div>
+          <div>
+            <input type="button" value="00" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="0" onClick={(e) => setValue(value + e.target.value)} />
+            <input type="button" value="=" className="equal" onClick={handleEqual} />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
-
-export default Home;

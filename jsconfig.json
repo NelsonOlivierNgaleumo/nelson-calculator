@@ -1,9 +1,31 @@
+// {
+//   "compilerOptions": {
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": ["src/*"]
+//     }
+//   },
+//   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+// }
+
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": ".", // Base directory
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"] // Alias for `src` folder
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": [
+    "next-env.d.ts",
+    "src/**/*",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "out"
+  ]
 }
